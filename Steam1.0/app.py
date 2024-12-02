@@ -38,21 +38,21 @@ def Stats():
     api_key = session.get('api_key')
 
     if steam_id and api_key:
-        # Haal algemene gegevens op
+
         summary_url = f"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={api_key}&steamids={steam_id}"
         response_summary = requests.get(summary_url)
 
         if response_summary.status_code == 200:
             player_info = response_summary.json()['response']['players'][0]
 
-            # Haal speeltijdgegevens op
+
             games_url = f"http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key={api_key}&steamid={steam_id}&include_played_free_games=true"
             response_games = requests.get(games_url)
 
             if response_games.status_code == 200:
                 games_data = response_games.json()['response']['games']
 
-                # Bereken speeltijd vandaag en deze week (voorbeeld: CS:GO appid = 730)
+
                 today_playtime = 0
                 weekly_playtime = 0
 
