@@ -67,6 +67,7 @@ body, html {
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            font-family: Motiva Sans, Arial, sans-serif;
         }
 
         .Steam_ID_invullen input, .Steam_ID_invullen button {
