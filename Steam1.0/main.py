@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from Stats import stats_route
 
 app = Flask(__name__)
-app.secret_key = "jouw_zeer_veilige_secret_key"
+app.secret_key = "secret_key"
 app.permanent_session_lifetime = timedelta(minutes=10)
 
 @app.template_filter('datetimeformat')
