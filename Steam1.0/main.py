@@ -1,15 +1,18 @@
-from flask import Flask, render_template, session
-from datetime import datetime, timedelta
+from flask import Flask, render_template
+from datetime import timedelta
 from Stats import stats_route
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
 app.permanent_session_lifetime = timedelta(minutes=10)
 
+# Custom datetime filter
 @app.template_filter('datetimeformat')
 def datetimeformat(value):
+    from datetime import datetime
     return datetime.fromtimestamp(value).strftime('%Y-%m-%d %H:%M:%S')
 
+# Routes
 @app.route('/')
 def home():
     return render_template('Home.html')
@@ -31,6 +34,7 @@ app.add_url_rule('/Stats', 'Stats', stats_route(), methods=['GET', 'POST'])
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 """
 Bronnen:

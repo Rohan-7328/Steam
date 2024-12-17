@@ -16,6 +16,7 @@ def stats_route():
             try:
                 summary_url = f"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={api_key}&steamids={steam_id}"
                 response_summary = requests.get(summary_url)
+                response_summary.raise_for_status()  # Controleer op HTTP-fouten
                 response_summary.raise_for_status()
                 players = response_summary.json().get('response', {}).get('players', [])
 
@@ -25,6 +26,7 @@ def stats_route():
                 player_info = players[0]
                 games_url = f"http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key={api_key}&steamid={steam_id}&include_played_free_games=true"
                 response_games = requests.get(games_url)
+                response_games.raise_for_status()  # Controleer op HTTP-fouten
                 response_games.raise_for_status()
                 games_data = response_games.json().get('response', {}).get('games', [])
 
