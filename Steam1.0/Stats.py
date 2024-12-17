@@ -44,6 +44,9 @@ def stats_route():
                 weekly_hours = weekly_playtime // 60
                 weekly_minutes = weekly_playtime % 60
 
+                session['today_playtime'] = f"{today_hours} uur en {today_minutes} minuten"
+                session['weekly_playtime'] = f"{weekly_hours} uur en {weekly_minutes} minuten"
+
                 return render_template(
                     'Stats.html',
                     player_info=player_info,
