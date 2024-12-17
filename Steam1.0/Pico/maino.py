@@ -1,10 +1,32 @@
 # Afstandsensor met Neopixel code
+#installeer de library: microPython
 
 
 from machine import Pin
 import time
 import machine
 import neopixel
+import urequests  # HTTP library
+import network    # WiFi-verbinding
+
+# wifi instellingen via mobiele hotspot laptop
+SSID = 'TwanHotspot'
+PASSWORD = 'wifiyes12'
+SERVER_URL = 'http://<http://127.0.0.1:5000/>:5000/update'  # Flask-endpoint
+
+wifi = network.WLAN(network.STA_IF)
+wifi.active(True)
+wifi.connect(SSID, PASSWORD)
+
+print("Verbinding maken...")
+while not wifi.isconnected():
+    print("Nog geen verbinding...")
+    time.sleep(1)
+    if wifi.isconnected():
+        print("WiFi verbonden!")
+        print("IP-configuratie:", wifi.ifconfig())
+
+
 
 np = neopixel.NeoPixel(machine.Pin(13), 8)
 led_pins = [
