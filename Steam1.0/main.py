@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, request
 from datetime import timedelta
 from Stats import stats_route
 
@@ -37,14 +37,40 @@ def Community():
     return render_template('Community.html')
 
 #dit is onze route voor de gezondheid
-@app.route('/Gezondheid.')
+@app.route('/gezondheid', methods=['GET', 'POST'])
 def Gezondheid():
+
+
+    if request.method == 'POST':
+        # JSON-data ontvangen bij POST-verzoek
+        json_data = request.get_json()
+        if json_data:
+            afstand = json_data.get('distance')
+            print(f"Ontvangen afstand: {afstand} cm")
+            return {"status": "success", "afstand": afstand}, 200
+        else:
+            print("Geen data ontvangen")
+            return {"status": "error", "message": "Geen data ontvangen"}, 400
 
     today_playtime = session.get('today_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
     weekly_playtime = session.get('weekly_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
 
     return render_template('Gezondheid.html', today_playtime=today_playtime, weekly_playtime=weekly_playtime)
 
+    # Functie om de data te verwerken (later in een route plaatsen)
+    def ontvang_data_afstandsensor():
+        # JSON-data ontvangen van de POST-request
+        json_data = request.get_json()
+
+        # Controleer of er data binnenkomt
+        if json_data:
+            afstand = json_data.get('distance')  # Haal de 'distance' waarde uit de JSON
+            print(f"Ontvangen afstand: {afstand} cm")
+            return afstand  # Of doe hier iets met de data
+        else:
+            print("Geen data ontvangen")
+            return None
+    ontvang_data_afstandsensor()
 
 # Stats route
 app.add_url_rule('/Stats', 'Stats', stats_route(), methods=['GET', 'POST'])
