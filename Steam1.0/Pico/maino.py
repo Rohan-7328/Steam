@@ -10,8 +10,8 @@ import urequests  # HTTP library
 import network    # WiFi-verbinding
 
 # wifi instellingen via mobiele hotspot laptop
-SSID = 'TwanHotspot'
-PASSWORD = 'wifiyes12'
+SSID = 'LAPTOPVANNICK123'
+PASSWORD = 'password'
 SERVER_URL = 'http://<http://127.0.0.1:5000/>:5000/update'  # Flask-endpoint
 
 wifi = network.WLAN(network.STA_IF)
@@ -57,14 +57,6 @@ def measure_distance():
     return distance
 
 
-#  """
-#     Meet de afstand met de SR04
-#  """
-
-# implementeer deze functie
-
-#  return 0
-
 
 def display_distance(distance):
     for i in range(8):
@@ -90,17 +82,19 @@ def display_distance(distance):
     np.write()
     time.sleep(0.1)
 
-    """
-        Laat de afstand d.m.v. de leds zien.
-        1 led =  10 cm
-        2 leds = 15 cm
-        3 leds = 20 cm
-        4 leds = 25 cm
-        5 leds = 30 cm
-    """
+
+
+#verzoek versturen naar server
+def versturen_data_afstandsensor:
+    payload = {"distance": measure_distance()}
+    headers = {'Content-Type': 'application/json'} #hiermee komt het in een JSON bestand
+    urequests.post(url, json=payload, headers=headers)
+
 
 
 while True:
     distance = measure_distance()
     display_distance(distance)
     time.sleep_ms(100)
+    versturen_data_afstandsensor()
+
