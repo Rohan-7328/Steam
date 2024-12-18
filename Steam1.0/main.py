@@ -39,41 +39,39 @@ def Community():
 #dit is onze route voor de gezondheid
 @app.route('/gezondheid', methods=['GET', 'POST'])
 def Gezondheid():
+    print("Request ontvangen:", request)
+    print("Method:", request.method)
 
-
+    # POST-request: JSON-data verwerken
     if request.method == 'POST':
-        # JSON-data ontvangen bij POST-verzoek
         json_data = request.get_json()
-        if json_data:
+        print("JSON ontvangen:", json_data)
+
+        if json_data and 'distance' in json_data:
             afstand = json_data.get('distance')
             print(f"Ontvangen afstand: {afstand} cm")
             return {"status": "success", "afstand": afstand}, 200
         else:
-            print("Geen data ontvangen")
-            return {"status": "error", "message": "Geen data ontvangen"}, 400
+            print("Geen geldige data ontvangen")
+            return {"status": "error", "message": "Geen geldige data ontvangen"}, 400
 
+    # GET-request: stats logica en HTML renderen
+    action = request.args.get('action', default='playtime')  # Optioneel: voeg ?action=stats toe in de URL
+
+    if action == 'stats':
+        print("Stats data aangeroepen")
+        return {"status": "success", "message": "Statspagina data placeholder"}, 200
+
+    # Default gedrag: playtime data tonen
     today_playtime = session.get('today_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
     weekly_playtime = session.get('weekly_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
 
+    print(f"today_playtime: {today_playtime}, weekly_playtime: {weekly_playtime}")
     return render_template('Gezondheid.html', today_playtime=today_playtime, weekly_playtime=weekly_playtime)
-
-    # Functie om de data te verwerken (later in een route plaatsen)
-    def ontvang_data_afstandsensor():
-        # JSON-data ontvangen van de POST-request
-        json_data = request.get_json()
-
-        # Controleer of er data binnenkomt
-        if json_data:
-            afstand = json_data.get('distance')  # Haal de 'distance' waarde uit de JSON
-            print(f"Ontvangen afstand: {afstand} cm")
-            return afstand  # Of doe hier iets met de data
-        else:
-            print("Geen data ontvangen")
-            return None
-    ontvang_data_afstandsensor()
 
 # Stats route
 app.add_url_rule('/Stats', 'Stats', stats_route(), methods=['GET', 'POST'])
+
 
 if __name__ == '__main__':
     app.run(debug=True)
