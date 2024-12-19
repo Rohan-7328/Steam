@@ -79,7 +79,8 @@ app.add_url_rule('/Stats', 'Stats', stats_route(), methods=['GET', 'POST'])
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
+
 
 
 
