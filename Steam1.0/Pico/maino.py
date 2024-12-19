@@ -82,7 +82,7 @@ def display_distance(distance):
     np.write()
     time.sleep(0.1)
 
-#verzoek versturen naar server
+# Verzoek versturen naar server
 def versturen_data_afstandsensor():
     payload = {"distance": measure_distance()}
     headers = {'Content-Type': 'application/json'}
@@ -98,4 +98,3 @@ while True:
     display_distance(distance)
     time.sleep(1)  # Verhoog de interval naar 1 seconde
     versturen_data_afstandsensor()
-
