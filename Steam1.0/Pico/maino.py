@@ -10,9 +10,9 @@ import urequests  # HTTP library
 import network    # WiFi-verbinding
 
 # wifi instellingen via mobiele hotspot laptop
-SSID = 'LAPTOPVANNICK123'
-PASSWORD = 'password'
-url = 'http://127.0.0.1:5000/gezondheid'  # Flask-endpoint
+SSID = 'H369A7BC73E'
+PASSWORD = 'C3F54E7EA52A'
+url = 'http://20.151.236.255/gezondheid'  # Correct
 
 wifi = network.WLAN(network.STA_IF)
 wifi.active(True)
