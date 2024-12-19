@@ -55,13 +55,6 @@ def Gezondheid():
             print("Geen geldige data ontvangen")
             return {"status": "error", "message": "Geen geldige data ontvangen"}, 400
 
-    # GET-request: stats logica en HTML renderen
-    action = request.args.get('action', default='playtime')  # Optioneel: voeg ?action=stats toe in de URL
-
-    if action == 'stats':
-        print("Stats data aangeroepen")
-        return {"status": "success", "message": "Statspagina data placeholder"}, 200
-
     # Default gedrag: playtime data tonen
     today_playtime = session.get('today_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
     weekly_playtime = session.get('weekly_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
