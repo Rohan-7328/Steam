@@ -12,7 +12,7 @@ import network    # WiFi-verbinding
 # wifi instellingen via mobiele hotspot laptop
 SSID = 'LAPTOPVANNICK123'
 PASSWORD = 'password'
-url = 'http://<http://127.0.0.1:5000/>:5000/update'  # Flask-endpoint
+url = 'http://127.0.0.1:5000/gezondheid'  # Flask-endpoint
 
 wifi = network.WLAN(network.STA_IF)
 wifi.active(True)
@@ -83,14 +83,19 @@ def display_distance(distance):
     time.sleep(0.1)
 
 #verzoek versturen naar server
-def versturen_data_afstandsensor:
+def versturen_data_afstandsensor():
     payload = {"distance": measure_distance()}
-    headers = {'Content-Type': 'application/json'} #hiermee komt het in een JSON bestand
-    urequests.post(url, json=payload, headers=headers)
+    headers = {'Content-Type': 'application/json'}
+    try:
+        response = urequests.post(url, json=payload, headers=headers)
+        print(f"POST-verzoek verstuurd. Server response: {response.status_code}, {response.text}")
+        response.close()  # Zorg dat de respons wordt gesloten om geheugen vrij te maken
+    except Exception as e:
+        print(f"Fout bij versturen van data naar server: {e}")
 
 while True:
     distance = measure_distance()
     display_distance(distance)
-    time.sleep_ms(100)
+    time.sleep(1)  # Verhoog de interval naar 1 seconde
     versturen_data_afstandsensor()
 

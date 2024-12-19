@@ -1,6 +1,7 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, jsonify
 from datetime import timedelta
 from Stats import stats_route
+from Gezondheid import update_afstand_in_sessie
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
@@ -39,28 +40,39 @@ def Community():
 #dit is onze route voor de gezondheid
 @app.route('/gezondheid', methods=['GET', 'POST'])
 def Gezondheid():
-    print("Request ontvangen:", request)
-    print("Method:", request.method)
-
-    # POST-request: JSON-data verwerken
+    # Verwerken van POST-verzoeken van de afstandssensor
     if request.method == 'POST':
         json_data = request.get_json()
-        print("JSON ontvangen:", json_data)
-
-        if json_data and 'distance' in json_data:
-            afstand = json_data.get('distance')
-            print(f"Ontvangen afstand: {afstand} cm")
-            return {"status": "success", "afstand": afstand}, 200
+        print(f"Ontvangen POST-data: {json_data}")  # Debug-log
+        response = update_afstand_in_sessie(json_data)  # Aanroepen van functie in Gezondheid.py
+        print(f"Response van update_afstand_in_sessie: {response}")  # Debug-log
+        if response["status"] == "success":
+            return jsonify(response), 200
         else:
-            print("Geen geldige data ontvangen")
-            return {"status": "error", "message": "Geen geldige data ontvangen"}, 400
+            return jsonify(response), 400
 
-    # Default gedrag: playtime data tonen
-    today_playtime = session.get('today_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
-    weekly_playtime = session.get('weekly_playtime', 'Niet beschikbaar vul je gegevens in op de Statspagina')
+    # Verwerken van GET-verzoeken via AJAX
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        afstand = session.get('afstand', 'Niet beschikbaar')  # Haal de waarde uit de sessie
+        print(f"JSON Response afstand: {afstand}")  # Debug-log
+        return jsonify(afstand=afstand)
 
-    print(f"today_playtime: {today_playtime}, weekly_playtime: {weekly_playtime}")
-    return render_template('Gezondheid.html', today_playtime=today_playtime, weekly_playtime=weekly_playtime)
+    # Normale paginaweergave voor Gezondheid.html
+    afstand = session.get('afstand', 'Niet beschikbaar')  # Haal de afstand uit de sessie
+    today_playtime = session.get('today_playtime', 'Niet beschikbaar')  # Haal speeltijd op
+    weekly_playtime = session.get('weekly_playtime', 'Niet beschikbaar')  # Haal speeltijd op
+
+    print(f"Afstand: {afstand}, Today playtime: {today_playtime}, Weekly playtime: {weekly_playtime}")  # Debug-log
+
+    return render_template(
+        'Gezondheid.html',
+        today_playtime=today_playtime,
+        weekly_playtime=weekly_playtime,
+        afstand=afstand
+    )
+
+
+
 
 # Stats route
 app.add_url_rule('/Stats', 'Stats', stats_route(), methods=['GET', 'POST'])

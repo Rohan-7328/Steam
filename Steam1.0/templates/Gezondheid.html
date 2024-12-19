@@ -5,6 +5,19 @@
   <link href="https://fonts.cdnfonts.com/css/motiva-sans" rel="stylesheet">
   <link rel="stylesheet" href="../static/Styles/Home.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function updateAfstand() {
+        $.get("/gezondheid", function(data) {
+            // Update de afstand in de HTML
+            $("p#afstand").text("Afstand: " + data.afstand);
+        });
+    }
+
+    // Roep de functie elke seconde aan
+    setInterval(updateAfstand, 1000);
+</script>
+
 
 </head>
 <body>
@@ -27,6 +40,7 @@
       <h2>Schermtijd:</h2>
         <p><strong>Speeltijd vandaag:</strong> {{ today_playtime }}</p>
         <p><strong>Afgelopen 2 weken gespeeld:</strong> {{ weekly_playtime }}</p>
+        <p><strong>Afstand:</strong> {{ afstand }}</p>
     </div>
 
 
