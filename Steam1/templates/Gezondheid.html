@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Gezondheid Steam</title>
+  <link href="https://fonts.cdnfonts.com/css/motiva-sans" rel="stylesheet">
+  <link rel="stylesheet" href="../static/Styles/Home.css">
+
+
+</head>
+<body>
+ <div class = "navigatie_balk">
+   <div class="Tekst_navigatie">
+        <a href="{{ url_for('Vrienden') }}" class = "Knoppen_navigatie">VRIENDEN</a>
+        <a href="{{ url_for('Community') }}" class = "Knoppen_navigatie">COMMUNITY</a>
+        <a href="{{ url_for('Stats') }}" class = "Knoppen_navigatie">STATS</a>
+        <a href="{{ url_for('Gezondheid') }}" class = "Knoppen_navigatie" style="border-bottom: 3px solid #1a9efd; color: #1a9dfb">GEZONDHEID</a>
+     </div>
+    <div class="Logo_nav">
+
+        <a href="{{ url_for('home') }}" class = "Logo_nav"></a>
+    </div>
+
+
+ </div>
+    <div class="Homepage_Info">
+      <P>Welkom bij de Gezondheidpage. Bekijk hier hoe gezond je spelletjes speelt.</P>
+      <h2>Schermtijd:</h2>
+        <p><strong>Speeltijd vandaag:</strong> {{ today_playtime }}</p>
+        <p><strong>Afgelopen 2 weken gespeeld:</strong> {{ weekly_playtime }}</p>
+    </div>
+
+
+    <div class="stats-container">
+
+
+
+
+
+</body>
+
+
+</html>
+

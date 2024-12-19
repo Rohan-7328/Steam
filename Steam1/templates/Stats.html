@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stats Steam</title>
+    <link href="https://fonts.cdnfonts.com/css/motiva-sans" rel="stylesheet">
+    <link rel="stylesheet" href="../static/Styles/Stats.css">
+
+
+</head>
+<body>
+    <div class="navigatie_balk">
+        <div class="Tekst_navigatie">
+            <a href="{{ url_for('Vrienden') }}" class="Knoppen_navigatie">VRIENDEN</a>
+            <a href="{{ url_for('Community') }}" class="Knoppen_navigatie">COMMUNITY</a>
+            <a href="{{ url_for('Stats') }}" class="Knoppen_navigatie" style="border-bottom: 3px solid #1a9efd; color: #1a9dfb">STATS</a>
+            <a href="{{ url_for('Gezondheid') }}" class="Knoppen_navigatie">GEZONDHEID</a>
+        </div>
+        <div class="Logo_nav">
+            <a href="{{ url_for('home') }}" class="Logo_nav"></a>
+        </div>
+    </div>
+    <div class="Homepage_Info">
+      <P>Welkom bij de stats page. Hier kan je al je informatie over je game gegevens vinden.</P>
+    </div>
+
+    <div class="Steam_ID_invullen">
+        <h2 class = "Gegevens_tekst">Vul je Steam gegevens in</h2>
+        <form action="{{ url_for('Stats') }}" method="post">
+            <label for="steam_id" class = "Gegevens_tekst">Steam ID:</label>
+            <input type="text" id="steam_id" name="steam_id" placeholder="Voer je Steam ID in" value="{{ steam_id if steam_id else '' }}" required>
+            <label for="api_key" class = "Gegevens_tekst">API Key:</label>
+            <input type="text" id="api_key" name="api_key" placeholder="Voer je Steam API Key in" value="{{ api_key if api_key else '' }}" required>
+
+            <button type="submit">Bekijk stats</button>
+            <p>Geen API key? Ga dan naar de <a href="https://steamcommunity.com/dev/apikey" style = "color: blue;" target ="_blank" >Steam API key</a>
+            pagina om een nieuwe aan te maken.</p>
+        </form>
+    </div>
+
+
+    {% if player_info %}
+    <div class="stats-container">
+        <h2>Spelerinformatie:</h2>
+        <p><strong>Naam:</strong> {{ player_info['personaname'] }}</p>
+        <p><strong>Account aangemaakt op:</strong> {{ player_info['timecreated'] | datetimeformat }}</p>
+        <p><strong>Avatar:</strong></p>
+        <img src="{{ player_info['avatar'] }}" alt="Avatar" style="border-radius: 8px; width: 64px; height: 64px;">
+
+
+
+        <h2>Schermtijd:</h2>
+        <p><strong>Speeltijd vandaag:</strong> {{ today_playtime }}</p>
+        <p><strong>Afgelopen 2 weken gespeeld:</strong> {{ weekly_playtime }}</p>
+
+
+
+    </div>
+    {% elif error %}
+    <div class="stats-container">
+        <p class="error">{{ error }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
