@@ -56,27 +56,47 @@ def measure_distance():
     print(distance)
     return distance
 
+led_beeper = Pin(20, Pin.OUT)
+def kleurgroen(x):
+    groen = np[x] = [0, 15, 0]
+    led_beeper.value(0)
+    return groen
 
+def kleurgeel(x):
+    geel = np[x] = [15, 15, 0]
+    led_beeper.value(0)
+    return geel
 
+def kleuroranje(x):
+    oranje = np[x] = [30, 10, 0]
+    led_beeper.value(0)
+    return oranje
+
+    led_beeper.value(0)
 def display_distance(distance):
     for i in range(8):
         np[i] = [0, 0, 0]
 
+    if distance > 0:
+        kleurgroen(0)
+
     if distance < 80:
-        np[0] = [0, 15, 0]
+        kleurgroen(0)
+    if distance < 80:
+        kleurgroen(1)
     if distance < 70:
-        np[1] = [0, 15, 0]
-    if distance < 65:
-        np[2] = [0, 15, 0]
+        kleurgeel(2)
     if distance < 60:
-        np[3] = [15, 15, 0]
-    if distance < 57:
-        np[4] = [15, 15, 0]
-    if distance < 55:
-        np[5] = [15, 15, 0]
-    if distance < 51:
-        np[6] = [15, 0, 0]
+        kleurgeel(3)
+    if distance < 50:
+        kleuroranje(4)
     if distance < 40:
+        kleuroranje(5)
+    if distance < 35:
+        led_beeper.value(0)
+        np[6] = [15, 0, 0]
+    if distance < 30:
+        led_beeper.value(1)
         np[7] = [15, 0, 0]
 
     np.write()
@@ -96,5 +116,5 @@ def versturen_data_afstandsensor():
 while True:
     distance = measure_distance()
     display_distance(distance)
-    time.sleep(1)  # Verhoog de interval naar 1 seconde
+    time.sleep(0.1)  # Verhoog de interval naar 1 seconde
     versturen_data_afstandsensor()
