@@ -8,11 +8,16 @@ import requests
 
 def stats_route():
     # stats_route() is de functie die flask gebruikt om de route /Stats te maken
+
+
     def Stats():
         # Stats() is de functie die die word doorgegeven aan flask
         if request.method == 'POST':
             # dit controleerd of het een POST verzoek is. dit word gebruikt
             # wanneer je gegevens naar de server stuurt
+
+            session.clear()
+            #reset de Flask sessie als je een nieuwe key invult
             steam_id = request.form['steam_id']
             api_key = request.form['api_key']
             # hiermee haal je de steamID en API key uit de HTML site
