@@ -23,9 +23,9 @@ def stats_route():
 
             # Dit veranderd niks op de site maar dit is om te kijken
             # hoe de gegevens binnen komen op pycharm
-            print("Sessiegegevens zijn bijgewerkt:")
-            print(f"Steam ID: {steam_id}")
-            print(f"API Key: {api_key}")
+
+            print(steam_id)
+            print(api_key)
 
         steam_id = session.get('steam_id', 'Niet gevonden')
         api_key = session.get('api_key', 'Niet gevonden')
