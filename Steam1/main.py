@@ -2,7 +2,8 @@ from flask import Flask, render_template, session, request, jsonify
 from datetime import timedelta
 from Stats import stats_route
 from Gezondheid import update_afstand_in_sessie
-from Data import Data_route
+from Data import Data_route, Data_vrienden_route
+import requests
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
@@ -85,45 +86,28 @@ def Data_json():
     return jsonify({"game_names": game_names})
 
 
+@app.route('/Vrienden./json', methods=['GET'])
+def Vrienden_json():
+    vrienden_names = session.get('vrienden_names', [])
+
+    # Als vrienden_names leeg is, haal de gegevens opnieuw op
+    if not vrienden_names:
+        print("Sessie leeg. Ophalen van vriendenlijst...")
+        Data_vrienden_route()()  # Haal de gegevens op en vul de sessie
+        vrienden_names = session.get('vrienden_names', [])
+
+    return jsonify({"vrienden_names": vrienden_names})
+
+
 
 # Stats route
 app.add_url_rule('/Stats', 'Stats', stats_route(), methods=['GET', 'POST'])
 
 
 
-@app.route('/Data', methods=['GET', 'POST'])
-def Data():
-    if request.method == 'POST':
-        return Data_route()()
-
-    # Voor een GET-verzoek, controleer of de sessie gevuld is
-    game_names = session.get('game_names', [])
-    if not game_names:
-        print("Sessie leeg. Ophalen van gegevens...")
-        Data_route()()  # Haal de gegevens op en vul de sessie
-        game_names = session.get('game_names', [])
-
-    return render_template('Data.html', game_names=game_names)
-
-
-
-    if request.method == 'GET':
-
-
-        game_names = session.get('game_names', [])
-        print(f"Game names in GET-verzoek: {game_names}")  # Debugging
-        return render_template('Data.html', game_names=game_names)
-
-
-@app.route('/session_debug', methods=['GET'])
-def session_debug():
-    return jsonify(session.get('game_names', []))
-
-
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
 
 
 
