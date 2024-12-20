@@ -32,8 +32,8 @@ def stats_route():
             print(steam_id)
             print(api_key)
 
-        steam_id = session.get('steam_id', 'Niet gevonden')
-        api_key = session.get('api_key', 'Niet gevonden')
+        steam_id = session.get('steam_id')
+        api_key = session.get('api_key')
         # hier worden de waarden uit de sessie gehaald. als er niks word geretourneerd
         # dan komt er Niet gevonden op de site te staan
 
