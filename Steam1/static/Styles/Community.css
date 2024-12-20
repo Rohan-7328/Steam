@@ -65,6 +65,50 @@
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-
+        text-align: center;
 
         }
+
+    .Blokken_artikelen {
+        margin-top: 20px;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #1d304c;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .Blok {
+        background-color: #171d25;
+        flex: 1;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .Afbeelding {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .Blok p {
+        color: white;
+        font-family: 'Motiva Sans', Arial, sans-serif;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .titel {
+        font-weight: bold;
+        font-size: 20px;
+    }
+    .tekstcom {
+
+    }
