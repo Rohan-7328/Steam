@@ -1,13 +1,17 @@
 from flask import render_template, request, session
 import requests
+from Data import fetch_recommendations
+
 # render_template: Hiermee wordt een HTML-bestand gerenderd en teruggestuurd naar de browser.
 # request: hiermee kun je gegevens ophalen uit formulieren
 # session: hiermee kan je tijdelijk gegevens opslaan waardoor je dus bijvoorbeeld makkelijk
 # gegevens kan krijgen van Stats.py naar Gezondheid.py
 # requests is een externe bibliotheek om HTTP verzoeken naar andere APIs te kunnen sturen
 
-def stats_route():
+def stats_route(app):
     # stats_route() is de functie die flask gebruikt om de route /Stats te maken
+    @app.route('/Stats', methods=['GET', 'POST'])
+    # hiermee maak je het pad voor de site
 
 
     def Stats():
@@ -82,16 +86,22 @@ def stats_route():
                 session['today_playtime'] = f"{today_hours} uur en {today_minutes} minuten"
                 session['weekly_playtime'] = f"{weekly_hours} uur en {weekly_minutes} minuten"
 
+                game_ids = [game.get('appid') for game in games_data]
+                recommendations = fetch_recommendations(game_ids)
+                # hier halen we de Games op die de gebruiker heeft
+
                 return render_template(
                     #hiermee word het HTML bestand Stats.html weergeven
                     'Stats.html',
+
                     player_info=player_info,
-                    steam_id=steam_id,
-                    api_key=api_key,
-                    today_playtime=f"{today_hours} uur en {today_minutes} minuten",
-                    weekly_playtime=f"{weekly_hours} uur en {weekly_minutes} minuten"
-                    # dit zijn de variabele die worden doorgegeven naar Stats.html
+                    today_playtime=f"{today_playtime // 60} uur en {today_playtime % 60} minuten",
+                    weekly_playtime=f"{weekly_playtime // 60} uur en {weekly_playtime % 60} minuten",
+                    recommendations=recommendations
                 )
+
+                    # dit zijn de variabele die worden doorgegeven naar Stats.html
+
             except requests.exceptions.HTTPError as http_err:
                 if http_err.response.status_code == 403:
                     error_message = "Onjuiste API-key ingevoerd. Controleer je API-key en probeer het opnieuw."

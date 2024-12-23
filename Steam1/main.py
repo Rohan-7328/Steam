@@ -100,8 +100,12 @@ def Vrienden_json():
 
 
 
+
+
+
 # Stats route
-app.add_url_rule('/Stats', 'Stats', stats_route(), methods=['GET', 'POST'])
+stats_route(app)
+
 
 
 

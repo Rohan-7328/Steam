@@ -52,9 +52,33 @@
         <p><strong>Speeltijd vandaag:</strong> {{ today_playtime }}</p>
         <p><strong>Afgelopen 2 weken gespeeld:</strong> {{ weekly_playtime }}</p>
 
-
-
     </div>
+    <div class="stats-container">
+  <div class="recommendations-container">
+    {% if recommendations %}
+      {% for entry in recommendations %}
+        <div class="recommendation-entry">
+          <p>
+            <strong>Game:</strong>
+            <a href="{{ entry.original_game.link }}" target="_blank">{{ entry.original_game.name }}</a>
+          </p>
+          {% if entry.similar_games %}
+            <p><strong>Gerelateerde games:</strong></p>
+            {% for similar_game in entry.similar_games %}
+              <p>
+                <a href="{{ similar_game.link }}" target="_blank">{{ similar_game.name }}</a>
+              </p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Geen aanbevelingen beschikbaar.</p>
+    {% endif %}
+  </div>
+</div>
+
+
     {% elif error %}
     <div class="stats-container">
         <p class="error">{{ error }}</p>

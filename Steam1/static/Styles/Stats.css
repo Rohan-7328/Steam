@@ -130,3 +130,30 @@ body, html {
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
+
+        .recommendations-container {
+    background-color: #1c1f26; /* Donkere achtergrond */
+    padding: 20px; /* Binnenruimte */
+    border-radius: 8px; /* Afronde hoeken */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtiele schaduw */
+    color: #e4e4e4; /* Lichte tekstkleur */
+    font-family: 'Arial', sans-serif; /* Modern en simpel lettertype */
+    margin-top: 20px; /* Ruimte boven de container */
+}
+
+    .recommendation-entry {
+        margin-bottom: 15px; /* Ruimte tussen entries */
+        padding: 10px; /* Binnenruimte voor elke entry */
+        border: 1px solid #333; /* Subtiele rand rond entries */
+        border-radius: 5px; /* Afronde hoeken */
+    }
+
+    .recommendation-entry a {
+        color: #1e90ff; /* Blauwe linkkleur */
+        text-decoration: none; /* Geen onderlijning */
+    }
+
+    .recommendation-entry a:hover {
+        color: #1484d2; /* Iets donkerdere blauwe kleur bij hover */
+        text-decoration: underline; /* Onderlijning bij hover */
+    }
