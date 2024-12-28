@@ -19,6 +19,7 @@ wifi.active(True)
 wifi.connect(SSID, PASSWORD)
 
 print("Verbinding maken...")
+
 while not wifi.isconnected():
     print("Nog geen verbinding...")
     time.sleep(1)
@@ -42,15 +43,24 @@ echo_pin = Pin(15, Pin.IN)
 
 
 def measure_distance():
-    start = time.ticks_us()
     trigger_pin.value(1)
     time.sleep_us(10)
     trigger_pin.value(0)
 
+    #start timeout timer
+    timeout_start = time.ticks_us()
+
     while echo_pin.value() == 0:
-        start = time.ticks_us()
+        if time.ticks_diff(time.ticks_us(), timeout_start) > 5000:
+            print('Timeout, echo niet gestart')
+            return float('inf')
+    start = time.ticks_us()
+    timeout_start = time.ticks_us() #reset timeout timer
     while echo_pin.value() == 1:
-        end = time.ticks_us()
+        if time.ticks_diff(time.ticks_us(), timeout_start) > 5000:
+            print('Timeout, echo blijft hangen')
+            return float('inf')
+    end = time.ticks_us()
     duration = time.ticks_diff(end, start)
     distance = 0.0343 * duration / 2
     print(distance)
@@ -108,13 +118,14 @@ def versturen_data_afstandsensor():
     headers = {'Content-Type': 'application/json'}
     try:
         response = urequests.post(url, json=payload, headers=headers)
-        print(f"POST-verzoek verstuurd. Server response: {response.status_code}, {response.text}")
-        response.close()  # Zorg dat de respons wordt gesloten om geheugen vrij te maken
+        print(f"Server response: {response.text}")  # Controleer wat de server terugstuurt
+        response.close()  # Sluit de respons correct om geheugen te sparen
     except Exception as e:
         print(f"Fout bij versturen van data naar server: {e}")
+
 
 while True:
     distance = measure_distance()
     display_distance(distance)
-    time.sleep(0.1)  # Verhoog de interval naar 1 seconde
+    time.sleep(0.5)  # Verhoog de interval naar 1 seconde
     versturen_data_afstandsensor()
