@@ -47,6 +47,8 @@ def Gezondheid():
         json_data = request.get_json()
         print(f"Ontvangen POST-data: {json_data}")  # Debug-log
         response = update_afstand_in_sessie(json_data)  # Aanroepen van functie in Gezondheid.py
+        session.permanent = True  # Maak sessie permanent
+        print(f"Sessie permanent gemaakt.")
         print(f"Response van update_afstand_in_sessie: {response}")  # Debug-log
         if response["status"] == "success":
             print(f"Sessie-inhoud na POST: {dict(session)}")  # Debug-log
