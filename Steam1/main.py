@@ -9,6 +9,13 @@ app = Flask(__name__)
 app.secret_key = "secret_key"
 app.permanent_session_lifetime = timedelta(minutes=10)
 
+# Cookie-configuratie
+app.config['SESSION_COOKIE_DOMAIN'] = 'momanijero.ddns.net'  # Gebruik je domeinnaam
+app.config['SESSION_COOKIE_NAME'] = 'session'
+app.config['SESSION_COOKIE_SECURE'] = False  # Zet op True als je HTTPS gebruikt
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
 # dit geeft de tijd
 @app.template_filter('datetimeformat')
 def datetimeformat(value):
