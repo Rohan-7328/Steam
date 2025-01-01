@@ -49,6 +49,7 @@ def Gezondheid():
         response = update_afstand_in_sessie(json_data)  # Aanroepen van functie in Gezondheid.py
         print(f"Response van update_afstand_in_sessie: {response}")  # Debug-log
         if response["status"] == "success":
+            print(f"Sessie-inhoud na POST: {dict(session)}")  # Debug-log
             return jsonify(response), 200
         else:
             return jsonify(response), 400
@@ -72,6 +73,7 @@ def Gezondheid():
         weekly_playtime=weekly_playtime,
         afstand=afstand
     )
+
 
 @app.route('/Data/json', methods=['GET'])
 def Data_json():
