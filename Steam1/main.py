@@ -91,17 +91,20 @@ def Data_json():
 @app.route('/Vrienden./json', methods=['GET'])
 def Vrienden_json():
     vrienden_names = session.get('vrienden_names', [])
+    vrienden_data = session.get('vrienden_data', [])
 
-    # Als vrienden_names leeg is, haal de gegevens opnieuw op
-    if not vrienden_names:
-        print("Sessie leeg. Ophalen van vriendenlijst...")
-        Data_vrienden_route()()  # Haal de gegevens op en vul de sessie
+    # Als de sessie leeg is, haal de gegevens opnieuw op
+    if not vrienden_names or not vrienden_data:
+        print("Sessie leeg. Ophalen van vriendenlijst en schermtijd...")
+        Data_vrienden_route()()  # Roep de functie aan die de sessie vult
         vrienden_names = session.get('vrienden_names', [])
+        vrienden_data = session.get('vrienden_data', [])
 
-    return jsonify({"vrienden_names": vrienden_names})
-
-
-
+    # Retourneer de JSON-respons
+    return jsonify({
+        "vrienden_names": vrienden_names,
+        "vrienden_data": vrienden_data
+    })
 
 
 
