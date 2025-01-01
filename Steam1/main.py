@@ -48,7 +48,8 @@ def Gezondheid():
         print(f"Ontvangen POST-data: {json_data}")  # Debug-log
         response = update_afstand_in_sessie(json_data)  # Aanroepen van functie in Gezondheid.py
         session.permanent = True  # Maak sessie permanent
-        print(f"Sessie permanent gemaakt.")
+        print(f"[POST] Ontvangen cookies: {request.cookies}")
+        print(f"[POST] Sessie-inhoud: {dict(session)}")
         print(f"Response van update_afstand_in_sessie: {response}")  # Debug-log
         if response["status"] == "success":
             print(f"Sessie-inhoud na POST: {dict(session)}")  # Debug-log
@@ -59,6 +60,8 @@ def Gezondheid():
     # Verwerken van GET-verzoeken via AJAX
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         afstand = session.get('afstand', 'Niet beschikbaar')  # Haal de waarde uit de sessie
+        print(f"[GET-AJAX] Ontvangen cookies: {request.cookies}")
+        print(f"[GET-AJAX] Sessie-inhoud: {dict(session)}")
         print(f"JSON Response afstand: {afstand}")  # Debug-log
         return jsonify(afstand=afstand)
 

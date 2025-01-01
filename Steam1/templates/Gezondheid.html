@@ -8,21 +8,21 @@
 <body>
     <div class="navigatie_balk">
         <div class="Tekst_navigatie">
-            <a href="{{ url_for('Vrienden') }}" class="Knoppen_navigatie">VRIENDEN</a>
-            <a href="{{ url_for('Community') }}" class="Knoppen_navigatie">COMMUNITY</a>
-            <a href="{{ url_for('Stats') }}" class="Knoppen_navigatie">STATS</a>
-            <a href="{{ url_for('Gezondheid') }}" class="Knoppen_navigatie" style="border-bottom: 3px solid #1a9efd; color: #1a9dfb">GEZONDHEID</a>
+            <a href="/Vrienden." class="Knoppen_navigatie">VRIENDEN</a>
+            <a href="/Community." class="Knoppen_navigatie">COMMUNITY</a>
+            <a href="/Stats" class="Knoppen_navigatie">STATS</a>
+            <a href="/gezondheid" class="Knoppen_navigatie" style="border-bottom: 3px solid #1a9efd; color: #1a9dfb">GEZONDHEID</a>
         </div>
         <div class="Logo_nav">
-            <a href="{{ url_for('home') }}" class="Logo_nav"></a>
+            <a href="/" class="Logo_nav"></a>
         </div>
     </div>
     <div class="Homepage_Info">
         <p>Welkom bij de Gezondheidpage. Bekijk hier hoe gezond je spelletjes speelt.</p>
         <h2>Schermtijd:</h2>
-        <p><strong>Speeltijd vandaag:</strong> {{ today_playtime }}</p>
-        <p><strong>Afgelopen 2 weken gespeeld:</strong> {{ weekly_playtime }}</p>
-        <p><strong>Afstand:</strong> {{ afstand }}</p> <!-- Direct de sessiewaarde tonen -->
+        <p><strong>Speeltijd vandaag:</strong> {{ today_playtime }}</p> <!-- Dynamische waarde -->
+        <p><strong>Afgelopen 2 weken gespeeld:</strong> {{ weekly_playtime }}</p> <!-- Dynamische waarde -->
+        <p><strong>Afstand:</strong> {{ afstand }}</p> <!-- Dynamische waarde -->
     </div>
     <div class="stats-container">
     </div>
