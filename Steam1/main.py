@@ -44,6 +44,7 @@ def Community():
 def Gezondheid():
     # Verwerken van POST-verzoeken van de afstandssensor
     if request.method == 'POST':
+        print(f"[POST] Ontvangen cookies: {request.cookies}")
         json_data = request.get_json()
         print(f"Ontvangen POST-data: {json_data}")  # Debug-log
         response = update_afstand_in_sessie(json_data)  # Aanroepen van functie in Gezondheid.py
@@ -64,7 +65,8 @@ def Gezondheid():
         print(f"[GET-AJAX] Sessie-inhoud: {dict(session)}")
         print(f"JSON Response afstand: {afstand}")  # Debug-log
         return jsonify(afstand=afstand)
-
+    print(f"[GET] Ontvangen cookies: {request.cookies}")
+    print(f"[GET] Sessie-inhoud: {dict(session)}")
     # Normale paginaweergave voor Gezondheid.html
     afstand = session.get('afstand', 'Niet beschikbaar')  # Haal de afstand uit de sessie
     today_playtime = session.get('today_playtime', 'Niet beschikbaar')  # Haal speeltijd op
